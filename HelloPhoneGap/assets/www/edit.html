@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Capture Photo</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" charset="utf-8" src="cordova-1.7.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/main.js"></script>
+    <script type="text/javascript" charset="utf-8">
+ 		// Cordova is ready to be used!
+    	//
+	    function onDeviceReady() {
+	        pictureSource=navigator.camera.PictureSourceType;
+	        destinationType=navigator.camera.DestinationType;
+	        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+	        
+	        //capturePhoto();
+	    }
+    </script>
+  </head>
+  <body>
+  	<p id="message"></p>
+  	<h1>Edit the page</h1>
+  	<p><a href="index.html">index.html</a></p>
+  	<p id="geolocation">Finding geolocation...</p>
+    <button onclick="capturePhoto();">Capture Photo</button> <br>
+    <button onclick="capturePhotoEdit();">Capture Editable Photo</button> <br>
+    <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
+    <button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);">From Photo Album</button><br>
+    <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+    <img style="display:none;" id="largeImage" src="" />
+  	<p id="errormessage"></p>
+  </body>
+</html>
