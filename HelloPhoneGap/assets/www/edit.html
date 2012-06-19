@@ -2,33 +2,47 @@
 <html>
   <head>
     <title>Capture Photo</title>
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css"></link>
     <script type="text/javascript" charset="utf-8" src="cordova-1.7.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/jquery-1.7.2.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/main.js"></script>
-    <script type="text/javascript" charset="utf-8">
- 		// Cordova is ready to be used!
-    	//
-	    function onDeviceReady() {
-	        pictureSource=navigator.camera.PictureSourceType;
-	        destinationType=navigator.camera.DestinationType;
-	        navigator.geolocation.getCurrentPosition(onSuccess, onError);
-	        
-	        //hello
-	        //capturePhoto();
-	    }
-    </script>
   </head>
   <body>
-  	<p id="message"></p>
-  	<h1>Edit the page</h1>
-  	<p><a href="index.html">index.html</a></p>
-  	<p id="geolocation">Finding geolocation...</p>
-    <button onclick="capturePhoto();">Capture Photo</button> <br>
-    <button onclick="capturePhotoEdit();">Capture Editable Photo</button> <br>
-    <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
-    <button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);">From Photo Album</button><br>
-    <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
-    <img style="display:none;" id="largeImage" src="" />
-  	<p id="errormessage"></p>
+  	<span id="edit-flag" style="display: none"></span>
+  	<div id="topmenu">
+  		<a href="index.html">Capture</a>
+		<a href="index.html" class="current">Modify</a>
+		<a href="upload.html">Share</a>
+		<a href="settings.html">Settings</a>
+  	</div>
+	<div id="content">
+  		<p id="message"></p>
+	  	<h1>Modify</h1>
+		<div class="modify_selector">
+			<div class="modify_selector_imgs">
+				<!--<div class="modify_selector_img">
+					<a onclick="selectImageToModify(this);return false;" href="#">
+						<input type="checkbox" />
+						<img src="http://danfolkes.com/etc/aaa/im/i/usr/1/3_sml.jpg" />
+					</a>
+					<div class="sharebutton" onclick="alert('clicked');" >SHARE>></div>
+				</div>
+				<div class="modify_selector_img">
+					<input type="checkbox" />
+					<a onclick="alert('clicked');"><img src="http://danfolkes.com/etc/aaa/im/i/usr/1/3_sml.jpg" /></a>
+					<div class="sharebutton" onclick="alert('clicked');" >SHARE>></div>
+				</div>
+				<div class="modify_selector_img">
+					<input type="checkbox" />
+					<a onclick="alert('clicked');"><img src="http://danfolkes.com/etc/aaa/im/i/usr/1/3_sml.jpg" /></a>
+					<div class="sharebutton" onclick="alert('clicked');" >SHARE>></div>
+				</div>-->
+			</div>
+		</div>
+	    <p id="errormessage"></p>
+  	</div>
+	<script>
+		uploadCapturedPhoto();
+	</script>
   </body>
 </html>

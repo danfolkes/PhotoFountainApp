@@ -1,0 +1,54 @@
+#message {color:green;}
+#topmenu {
+	width:100%;
+}
+#topmenu a {
+	display:block;
+	width:25%;
+	float:left;
+	background-color:yellow;
+}
+#topmenu a.current{
+	text-decoration:none;
+	background-color:gray;
+}
+#content {
+	clear:both;
+}
+#content #CaptureButtons button {
+	width:33%;
+	float:left;
+}
+#content #SelectedPhoto {
+	clear:both;
+	border: 1px black solid;
+}
+#content #SelectedPhoto img {
+	width:100%;
+}
+.modify_selector_img {
+	position:relative;
+	
+}
+div#content div.modify_selector div.modify_selector_imgs div.modify_selector_img input {
+	position:absolute;
+	top:0;
+	left:0;
+}
+#content div.sharebutton {
+	display:block;
+	position:absolute;
+	top:0;
+	right:0;
+	width:10%;
+	background-color:red;
+	float:right;
+}
+.modify_selector_imgs {
+}
+.modify_selector_imgs .modify_selector_img img{
+	width:100%;
+}
+#errormessage {
+	clear:both;
+}
