@@ -41,9 +41,15 @@
 				
 				$.post( "http://danfolkes.com/etc/aaa/im/upload.php", { r: numRand }, function( data ) {
 					$('#message').append(data.id);
+					var previewImage = "";
+					previewImage += "<div class=\"modify_selector_img\">";
+					previewImage += "<input type=\"checkbox\" />";
+					previewImage += "<a onclick=\"alert('clicked');\"><img src=\"http://danfolkes.com/etc/aaa/im/i/usr/1/" + data.id + "_sml.jpg\" /></a>";
+					previewImage += "<div class=\"sharebutton\" onclick=\"alert('clicked');\" >SHARE>></div>";
+					previewImage += "</div>";
+					$(".modify_selector_imgs").append(previewImage);
 					
 				}, "jsonp");
-				
 			});
     }
     
