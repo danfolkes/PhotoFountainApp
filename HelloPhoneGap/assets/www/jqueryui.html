@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <title>Capture Photo</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.1.0.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jquery.mobile.structure-1.1.0.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jquery.mobile.theme-1.1.0.min.css" />
+	    <script type="text/javascript" charset="utf-8" src="cordova-1.7.0.js"></script>
+	    <script type="text/javascript" charset="utf-8" src="js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.1.0.min.js"></script> 
+	    <script type="text/javascript" charset="utf-8" src="js/main.js"></script>
+	</head>
+	<!-- 
+		Try and get config info from DB, but if fails:
+	-->
+	<script>
+		var configs=new Array(); 
+		var config=new Array(); 
+		config["key"]="value";
+		configs[0]=config;     
+	
+		
+	</script>
+	<body>
+	  	<div data-role="page" id="mainpage">
+		      <div data-role="header" data-position="fixed"> 
+				   <div>PhotoFountain - Capture</div>
+				   <div data-role="navbar" >
+                    <ul>
+                        <li>
+                            <a href="#filter" >
+                                Filter
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#configure" >
+                                Configure
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+		      </div>
+		      <div data-role="content">
+		           <fieldset class="ui-grid-a">
+						<div class="ui-block-b"><button type="submit" data-theme="b">Camera</button></div>
+						<div class="ui-block-b"><button type="submit" data-theme="b">Gallery</button></div>	   
+					</fieldset>
+					<div class="ui-grid-solo">
+						<div class="ui-block-a">
+							<a href="#filter" data-role="button" data-theme="a">
+								>> Select Photo >> 
+							</a>
+							<a href="#filter" data-role="button" data-theme="a">
+								<img data-type="horizontal" src="http://danfolkes.com/etc/aaa/im/i/usr/1/1_sml.jpg" width="100%" />
+							</a>
+						</div>
+					</div>
+		      </div>
+		</div>
+		<div data-role="page" id="filter"> 
+		      <div data-role="header" data-position="fixed"> 
+				   <div>PhotoFountain - Filter</div>
+				   <div data-role="navbar" >
+                    <ul>
+                        <li>
+                            <a href="#mainpage" class="ui-btn-active">
+                                Capture
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#configure" >
+                                Configure
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+		      </div>
+		      <div data-role="content">
+		           <a href="#mainpage" data-role="button"> Back to Main Page </a>
+		      </div>
+		      <div data-role="footer"> 
+		           <h1> Content Page Footer </h1>
+		      </div>
+		</div>
+		<div data-role="page" id="configure"> 
+		      <div data-role="header" data-position="fixed"> 
+				   <div>PhotoFountain - Configure</div>
+				   <div data-role="navbar" >
+                    <ul>
+                        <li>
+                            <a href="#mainpage" class="ui-btn-active">
+                                Capture
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#filter" >
+                                Filter
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+		      </div>
+		      <div data-role="content">
+		           <a href="#mainpage" data-role="button"> Back to Main Page </a>
+		      </div>
+		      <div data-role="footer"> 
+		           <h1> Content Page Footer </h1>
+		      </div>
+		</div>
+	</body>
+</html>
