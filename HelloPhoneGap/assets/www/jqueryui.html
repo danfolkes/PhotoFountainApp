@@ -15,31 +15,13 @@
 		Try and get config info from DB, but if fails:
 	-->
 	<script>
-		var configs=new Array(); 
-		var config=new Array(); 
-		config["key"]="value";
-		configs[0]=config;     
-	
 		
 	</script>
 	<body>
 	  	<div data-role="page" id="mainpage">
-		      <div data-role="header" data-position="fixed"> 
-				   <div>PhotoFountain - Capture</div>
-				   <div data-role="navbar" >
-                    <ul>
-                        <li>
-                            <a href="#filter" >
-                                Filter
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#configure" >
-                                Configure
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+		      <div data-role="header" data-position="fixed" > 
+				   <a href="#configure" data-icon="gear" data-role="button" data-iconpos="notext">Config</a>
+				   <h1>PhotoFountain</h1>
 		      </div>
 		      <div data-role="content">
 		           <fieldset class="ui-grid-a">
@@ -59,53 +41,112 @@
 		      </div>
 		</div>
 		<div data-role="page" id="filter"> 
-		      <div data-role="header" data-position="fixed"> 
-				   <div>PhotoFountain - Filter</div>
-				   <div data-role="navbar" >
-                    <ul>
-                        <li>
-                            <a href="#mainpage" class="ui-btn-active">
-                                Capture
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#configure" >
-                                Configure
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+		       <div data-role="header" data-position="fixed" > 
+				   <a href="#configure" data-icon="gear" data-role="button" data-iconpos="notext">Config</a>
+				   <h1>PhotoFountain</h1>
 		      </div>
 		      <div data-role="content">
-		           <a href="#mainpage" data-role="button"> Back to Main Page </a>
+					<div>Check Items to Share</p>
+				   <div class="ui-grid-solo">
+						<div class="ui-block-a">
+							<label>
+								<input data-theme="a" type="checkbox" name="checkbox-0" /><img data-type="horizontal" src="http://danfolkes.com/etc/aaa/im/i/usr/1/1_sml.jpg" width="100%" />
+							</label>
+							<label>
+								<input data-theme="a" type="checkbox" name="checkbox-0" /><img data-type="horizontal" src="http://danfolkes.com/etc/aaa/im/i/usr/1/1_sml.jpg" width="100%" />
+							</label>
+							<label>
+								<input data-theme="a" type="checkbox" name="checkbox-0" /><img data-type="horizontal" src="http://danfolkes.com/etc/aaa/im/i/usr/1/1_sml.jpg" width="100%" />
+							</label>
+						</div>
+					</div>
 		      </div>
-		      <div data-role="footer"> 
-		           <h1> Content Page Footer </h1>
+		      	<fieldset class="ui-grid-a">
+					<div class="ui-block-b">
+						<a href="#mainpage" data-icon="arrow-l" data-role="button">Back</a>
+					</div>
+					<div class="ui-block-b">
+						<a href="#share" data-icon="arrow-r" data-role="button" data-iconpos="right">Share</a>
+					</div>	   
+				</fieldset>
+		</div>
+		<div data-role="page" id="share"> 
+		       <div data-role="header" data-position="fixed" > 
+				   <a href="#configure" data-icon="gear" data-role="button" data-iconpos="notext">Config</a>
+				   <h1>PhotoFountain</h1>
 		      </div>
+		      <div data-role="content">
+					<div>Check Items to Share</div>
+				   <div class="ui-grid-solo">
+						<div class="ui-block-a">
+							<label>
+								<input data-theme="a" type="checkbox" name="checkbox-0" /><img data-type="horizontal" src="http://danfolkes.com/etc/aaa/im/i/usr/1/1_sml.jpg" width="100%" />
+							</label>
+							<label>
+								<input data-theme="a" type="checkbox" name="checkbox-0" /><img data-type="horizontal" src="http://danfolkes.com/etc/aaa/im/i/usr/1/1_sml.jpg" width="100%" />
+							</label>
+							<label>
+								<input data-theme="a" type="checkbox" name="checkbox-0" /><img data-type="horizontal" src="http://danfolkes.com/etc/aaa/im/i/usr/1/1_sml.jpg" width="100%" />
+							</label>
+						</div>
+					</div>
+		      </div>
+		      	<fieldset class="ui-grid-a">
+					<div class="ui-block-b">
+						<a href="#mainpage" data-icon="arrow-l" data-role="button">Back</a>
+					</div>
+					<div class="ui-block-b">
+						<a href="#share" data-icon="arrow-r" data-role="button" data-iconpos="right">Share</a>
+					</div>	   
+				</fieldset>
+			</div>
 		</div>
 		<div data-role="page" id="configure"> 
-		      <div data-role="header" data-position="fixed"> 
-				   <div>PhotoFountain - Configure</div>
-				   <div data-role="navbar" >
-                    <ul>
-                        <li>
-                            <a href="#mainpage" class="ui-btn-active">
-                                Capture
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#filter" >
-                                Filter
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+		      <div data-role="header" data-position="fixed" > 
+				   <a href="#back" data-icon="back" data-role="button" data-iconpos="notext">Back</a>
+				   <h1>PhotoFountain</h1>
 		      </div>
 		      <div data-role="content">
-		           <a href="#mainpage" data-role="button"> Back to Main Page </a>
-		      </div>
-		      <div data-role="footer"> 
-		           <h1> Content Page Footer </h1>
+				<label for="select-choice-0" class="select">Shipping method:</label>
+				<select name="select-choice-0" id="select-choice-0">
+				<option value="standard">Standard: 7 day</option>
+				<option value="rush">Rush: 3 days</option>
+				<option value="express">Express: next day</option>
+				<option value="overnight">Overnight</option>
+				</select>
+				
+				<div data-role="fieldcontain">
+				<label for="name">Text Input:</label>
+				<input type="text" name="name" id="name" value=""  />
+				</div>	
+
+				<div data-role="fieldcontain">
+				<fieldset data-role="controlgroup">
+				<legend>Agree to the terms:</legend>
+				<input type="checkbox" name="checkbox-2" id="checkbox-2" class="custom" />
+				<label for="checkbox-2">I agree</label>
+				</fieldset>
+				</div>
+				
+				<fieldset data-role="controlgroup">
+				<legend>Choose a pet:</legend>
+				<input type="radio" name="radio-choice" id="radio-choice-1" value="choice-1" checked="checked" />
+				<label for="radio-choice-1">Cat</label>
+				
+				<input type="radio" name="radio-choice" id="radio-choice-2" value="choice-2"  />
+				<label for="radio-choice-2">Dog</label>
+				
+				<input type="radio" name="radio-choice" id="radio-choice-3" value="choice-3"  />
+				<label for="radio-choice-3">Hamster</label>
+				
+				<input type="radio" name="radio-choice" id="radio-choice-4" value="choice-4"  />
+				<label for="radio-choice-4">Lizard</label>
+				</fieldset>
+				
+				<label for="slider-1">Input slider:</label>
+				<input type="range" name="slider-1" id="slider-1" value="60" min="0" max="100" />
+				
+				
 		      </div>
 		</div>
 	</body>

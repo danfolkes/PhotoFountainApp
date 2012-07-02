@@ -1,3 +1,117 @@
+var configs=new Array(); 
+
+
+
+
+
+var pictureSource;   // picture source
+var destinationType; // sets the format of returned value 
+var db;
+// Wait for Cordova to connect with the device
+//
+document.addEventListener("deviceready",onDeviceReady,false);
+
+
+function onDeviceReady() {
+	Page_Load();
+	
+}
+
+function Page_Load() {
+	Configs_Load();
+	if (configs["pf_imgid"] <= 0) {
+		if (configs["img_src"] != null || configs["img_Base64"] != null ) {
+			//Load Image Source and Enable Links to Filters
+			$("#SelectedPhotoImg").attr("src","data:image/jpeg;base64," + configs["img_Base64"]);
+			// or $("#SelectedPhotoImg").attr("src",configs["img_src"]);
+		}
+		else {
+			//Load Camera
+			capturePhotoEdit()
+			Configs_Save();
+		}
+	}
+	else if (configs["pf_imgid"] > 0) {
+		// Image Should Be Uploaded and we should have a imgid=? back from the server.
+			
+		//$(".modify_selector_imgs").append(previewImage1);
+		//$(".modify_selector_imgs").append(previewImage2);
+		//$(".modify_selector_imgs").append(previewImage3);
+		//TODO: get share configs and load that up
+		//Enable Save/Share button
+	}
+	else if (configs["saved_img_paths"].length > 0) {
+		//Show Share Page
+		//Show all of the saved images.
+		//Allow "share".
+	}
+}
+
+
+function Configs_Load() {
+
+	var config=new Array(); 
+	config["key"]="value";
+	configs[0]=config; 
+	
+	//Check for GeoLocation.
+	
+}
+function Configs_Save() {
+	
+	return false;
+}
+
+function capturePhotoEdit() {
+	pictureSource=navigator.camera.PictureSourceType;
+	destinationType=navigator.camera.DestinationType;
+	// Take picture using device camera, allow edit, and retrieve image as base64-encoded string  
+	navigator.camera.getPicture(function onPhotoDataSuccess(imageData) {
+    	$("#SelectedPhotoImg").attr("src","data:image/jpeg;base64," + imageData);
+
+		onFail("Sending Image...");
+		
+		UpdateDBwithImageData(imageData);
+		
+		$.post("http://danfolkes.com/etc/aaa/im/pic.php?imgid=1&size=med", { s: imageData },
+			function( data ) {
+				//this should just return an ID.
+				//then:
+				//smallImage2.src = http://danfolkes.com/etc/aaa/im/pic.php?imgid=1&savedFilterID=88
+				$("smallImage2").attr("src","http://danfolkes.com/etc/aaa/im/pic.php?imgid=1&size=sml");
+				//onFail("data:" + data);
+			}
+		);
+    }, function onFail(message) {
+    	var element = document.getElementById('errormessage');
+        element.innerHTML += '<br />Error message: '           + message             + '';
+    }, { quality: 60, allowEdit: true, destinationType: destinationType.DATA_URL });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+
+
+
+
+
 
     var pictureSource;   // picture source
     var destinationType; // sets the format of returned value 
@@ -15,8 +129,6 @@
         
         if ($("#index-flag").length > 0)
     	{
-        	pictureSource=navigator.camera.PictureSourceType;
-            destinationType=navigator.camera.DestinationType;
         	capturePhotoEdit();
     	}
         else if ($("#edit-flag").length > 0)
@@ -111,29 +223,9 @@
 
     // Called when a photo is successfully retrieved
     //
-    function onPhotoDataSuccess(imageData) {
-    	$("#SelectedPhotoImg").attr("src","data:image/jpeg;base64," + imageData);
+    
 
-		onFail("Sending Image...");
-		
-		UpdateDBwithImageData(imageData);
-		
-		$.post("http://danfolkes.com/etc/aaa/im/pic.php?imgid=1&size=med", { s: imageData },
-			function( data ) {
-				//this should just return an ID.
-				//then:
-				//smallImage2.src = http://danfolkes.com/etc/aaa/im/pic.php?imgid=1&savedFilterID=88
-				$("smallImage2").attr("src","http://danfolkes.com/etc/aaa/im/pic.php?imgid=1&size=sml");
-				//onFail("data:" + data);
-			}
-		);
-    }
 
-    function capturePhotoEdit() {
-      // Take picture using device camera, allow edit, and retrieve image as base64-encoded string  
-      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 60, allowEdit: true, 
-        destinationType: destinationType.DATA_URL });
-    }
     
     function getPhoto(source) {
       // Retrieve image file location from specified source
@@ -157,3 +249,5 @@
         					'Error message: '        + error.message             	+ '<br />';
 
     }
+
+*/

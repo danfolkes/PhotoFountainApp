@@ -1,0 +1,25 @@
+Photo Fountain:
+http://danfolkes.com/PhotoFountain/
+License: GPL v3.0:
+http://www.gnu.org/licenses/gpl.html
+
+
+PhoneGap
+PhoneGap is an open source implementation of open standards. 
+That means developers and companies can use PhoneGap for 
+mobile applications that are free, commercial, open source, 
+or any combination of these.
+http://phonegap.com/about/
+License: Apache License, Version 2.0
+
+jQuery Mobile
+A Touch-Optimized UI Framework built with jQuery and HTML5.
+http://jquerymobile.com/
+http://jquery.org/about
+
+Media:
+
+Background Image:
+Old Paper Texture 4 By Sarai | Fotography
+http://www.flickr.com/photos/wingsofahero/
+http://www.flickr.com/photos/wingsofahero/3610826825/sizes/z/in/photostream/
