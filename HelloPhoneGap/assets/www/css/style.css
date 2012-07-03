@@ -1,4 +1,23 @@
 #message {color:green;}
+html.ui-mobile body div.ui-page {
+	/**/background:url(../images/paper-background.jpg);
+	/*background:url(../images/4806075532_c52d727856_b.jpg);*/
+	/*background:url(../images/2558160805_c15dd40154_b.jpg);*/
+	background-size:100% 100%;
+	background-repeat:no-repeat;
+}
+#filter .ui-content .ui-grid-solo .ui-checkbox label span span img {
+	
+	
+	width: 100% !important;
+}
+#filter .ui-content .ui-grid-solo {
+	
+	max-width: 600px !important;
+	width: 100% !important;
+	margin: 0 auto;
+}
+/*
 #topmenu {
 	width:100%;
 }
@@ -52,3 +71,4 @@ div#content div.modify_selector div.modify_selector_imgs div.modify_selector_img
 #errormessage {
 	clear:both;
 }
+*/

@@ -2,21 +2,15 @@
 <html>
 	<head>
 	    <title>Capture Photo</title>
-		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.1.0.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/jquery.mobile.structure-1.1.0.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/jquery.mobile.theme-1.1.0.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/style.css">
 	    <script type="text/javascript" charset="utf-8" src="cordova-1.7.0.js"></script>
 	    <script type="text/javascript" charset="utf-8" src="js/jquery-1.7.2.min.js"></script>
 		<script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.1.0.min.js"></script> 
 	    <script type="text/javascript" charset="utf-8" src="js/main.js"></script>
 	</head>
-	<!-- 
-		Try and get config info from DB, but if fails:
-	-->
-	<script>
-		
-	</script>
 	<body>
 	  	<div data-role="page" id="mainpage">
 		      <div data-role="header" data-position="fixed" > 
@@ -49,15 +43,20 @@
 					<div>Check Items to Share</p>
 				   <div class="ui-grid-solo">
 						<div class="ui-block-a">
-							<label>
-								<input data-theme="a" type="checkbox" name="checkbox-0" /><img data-type="horizontal" src="http://danfolkes.com/etc/aaa/im/i/usr/1/1_sml.jpg" width="100%" />
-							</label>
-							<label>
-								<input data-theme="a" type="checkbox" name="checkbox-0" /><img data-type="horizontal" src="http://danfolkes.com/etc/aaa/im/i/usr/1/1_sml.jpg" width="100%" />
-							</label>
-							<label>
-								<input data-theme="a" type="checkbox" name="checkbox-0" /><img data-type="horizontal" src="http://danfolkes.com/etc/aaa/im/i/usr/1/1_sml.jpg" width="100%" />
-							</label>
+							<fieldset data-role="controlgroup">
+								<label>
+									<input data-theme="a" type="checkbox" name="checkbox-0" />
+									<img data-type="horizontal" src="http://danfolkes.com/etc/aaa/im/i/usr/1/1_sml.jpg"  />
+								</label>
+								<label>
+									<input data-theme="a" type="checkbox" name="checkbox-0" />
+									<img data-type="horizontal" src="http://danfolkes.com/etc/aaa/im/i/usr/1/1_sml.jpg" />
+								</label>
+								<label>
+									<input data-theme="a" type="checkbox" name="checkbox-0" />
+									<img data-type="horizontal" src="http://danfolkes.com/etc/aaa/im/i/usr/1/1_sml.jpg" />
+								</label>
+							</fieldset>
 						</div>
 					</div>
 		      </div>
@@ -103,7 +102,7 @@
 		</div>
 		<div data-role="page" id="configure"> 
 		      <div data-role="header" data-position="fixed" > 
-				   <a href="#back" data-icon="back" data-role="button" data-iconpos="notext">Back</a>
+				   <a data-rel="back" data-icon="back" data-role="button" data-iconpos="notext">Back</a>
 				   <h1>PhotoFountain</h1>
 		      </div>
 		      <div data-role="content">
@@ -145,8 +144,6 @@
 				
 				<label for="slider-1">Input slider:</label>
 				<input type="range" name="slider-1" id="slider-1" value="60" min="0" max="100" />
-				
-				
 		      </div>
 		</div>
 	</body>
