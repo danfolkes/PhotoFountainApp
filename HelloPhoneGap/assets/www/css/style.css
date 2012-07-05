@@ -17,6 +17,9 @@ html.ui-mobile body div.ui-page {
 	width: 100% !important;
 	margin: 0 auto;
 }
+#main_image_selected, #main_image_not_selected {
+	display:none;
+}
 /*
 #topmenu {
 	width:100%;

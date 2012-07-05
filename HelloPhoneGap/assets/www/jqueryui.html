@@ -23,16 +23,29 @@
 						<div class="ui-block-b"><button type="submit" data-theme="b">Gallery</button></div>	   
 					</fieldset>
 					<div class="ui-grid-solo">
-						<div class="ui-block-a">
-							<a href="#filter" data-role="button" data-theme="a">
+						<div class="ui-block-a" id="main_image_selected">
+							<a href="#upload" data-role="button" data-theme="a" onclick="UploadImage();">
 								>> Select Photo >> 
 							</a>
-							<a href="#filter" data-role="button" data-theme="a">
+							<a href="#upload" data-role="button" data-theme="a" onclick="UploadImage();">
 								<img data-type="horizontal" src="http://danfolkes.com/etc/aaa/im/i/usr/1/1_sml.jpg" width="100%" />
 							</a>
 						</div>
+						<div class="ui-block-a" id="main_image_not_selected">
+							Please use the camera or gallery to select a picture.
+						</div>
 					</div>
 		      </div>
+		</div>
+		<div data-role="dialog" id="upload">
+			<div data-role="header" data-theme="d">
+				<h1>Dialog</h1>
+			</div>
+			<div data-role="content" data-theme="c">
+				<img class="progress" src="images/ajax-loader.gif" />
+				<p class="status">Status:</p>   
+				<a href="#mainpage" data-role="button" data-rel="back" data-theme="c">Cancel</a>    
+			</div>
 		</div>
 		<div data-role="page" id="filter"> 
 		       <div data-role="header" data-position="fixed" > 
