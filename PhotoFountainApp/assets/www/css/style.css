@@ -8,10 +8,9 @@ html.ui-mobile body div.ui-page {
 }
 #filter .ui-content .ui-grid-solo .ui-checkbox label span span img {
 	
-	
 	width: 100% !important;
 }
-#filter .ui-content .ui-grid-solo {
+#filter .ui-content .ui-grid-solo, #mainpage .ui-content .ui-grid-solo {
 	
 	max-width: 600px !important;
 	width: 100% !important;
@@ -20,6 +19,13 @@ html.ui-mobile body div.ui-page {
 #main_image_selected, #main_image_not_selected {
 	display:none;
 }
+.ui-icon-pf-camera {
+	background-image:url('../images/menu_standard.png');
+	background-size: 344px;
+	background-color:white;
+	background-position: -18px -19px;
+}
+
 /*
 #topmenu {
 	width:100%;
