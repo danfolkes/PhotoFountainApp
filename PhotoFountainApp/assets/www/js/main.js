@@ -1,4 +1,4 @@
-var configs=new Array(); 
+var configs = {};
 
 var pictureSource;   // picture source
 var destinationType; // sets the format of returned value 
@@ -15,8 +15,10 @@ $(function() {
 	onDeviceReady();
 });
 
+
 function Page_Load() {
 	Configs_Load();
+	
 	if (configs["pf_imgid"] <= 0) {
 		if (configs["img_src"] != null || configs["img_Base64"] != null ) {
 			//Load Image Source and Enable Links to Filters
@@ -33,7 +35,6 @@ function Page_Load() {
 			$("#main_image_not_selected").show();
 			
 			capturePhotoEdit();
-			Configs_Save();
 		}
 	}
 	else if (configs["pf_imgid"] > 0) {
@@ -45,35 +46,45 @@ function Page_Load() {
 		//TODO: get share configs and load that up
 		//Enable Save/Share button
 	}
-	else if (configs["saved_img_paths"].length > 0) {
+	else if (configs["saved_img_paths"] > 0) {
 		//Show Share Page
 		//Show all of the saved images.
 		//Allow "share".
 	}
 }
 
-
 function Configs_Load() {
-	// try and get from DB, 
-	if (false) {
-		
+	if (configs == undefined || configs.length == 0) {
+		//try and load from cookies
+		if (configs == undefined || configs.length == 0) {
+			//no, then get from db
+			alert ("get from db");
+
+			//LoadDBUp();
+			if (configs == undefined || configs.length == 0) {
+				//no, then load defaults:
+				alert ("loading defaults");
+				
+				var numRand = Math.random();
+				
+				configs =  {};
+				configs["key"]="value"; 
+				configs["pf_imgid"]=-1; 
+				configs["filterid_1"]=1; 
+				configs["filterid_2"]=3; 
+				configs["filterid_3"]=2; 
+				configs["img_src"]=null; 
+				configs["img_Base64"]=null; 
+				configs["numRand"]=numRand;
+				configs["saved_img_paths"] = "";
+				
+			}
+		}
 	}
-	else if (configs.length == 0) {
-		configs["key"]="value"; 
-		configs["pf_imgid"]=-1; 
-		configs["filterid_1"]=1; 
-		configs["filterid_2"]=3; 
-		configs["filterid_3"]=2; 
-		
-		configs["img_src"]=null; 
-		configs["img_Base64"]=null; 
-		var numRand = Math.random();
-		configs["numRand"]=numRand;
-	}
-	//Check for GeoLocation.
 }
 function Configs_Save() {
 	// save configs to db
+
 	return true;
 }
 
@@ -117,6 +128,7 @@ function getPhotoFromLIBRARY() {
 		$("#SelectedPhotoImg").attr("src","data:image/jpeg;base64," + imageData);
 		$("#main_image_selected").show();
 		$("#main_image_not_selected").hide();
+		Configs_Save();
 	}
   }
 
@@ -172,19 +184,6 @@ function Message(message, isGood) {
 		$(selector).html("");
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
