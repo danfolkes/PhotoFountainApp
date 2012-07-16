@@ -9,7 +9,7 @@
 	    <script type="text/javascript" charset="utf-8" src="cordova-1.7.0.js"></script>
 	    <script type="text/javascript" charset="utf-8" src="js/jquery-1.7.2.min.js"></script>
 		<script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.1.0.min.js"></script> 
-		<script type="text/javascript" charset="utf-8" src="js/jquery.cookie.js"></script> 
+		<script type="text/javascript" charset="utf-8" src="js/jquery.Storage.js"></script> 
 	    <script type="text/javascript" charset="utf-8" src="js/main.js"></script>
 	</head>
 	<body>
@@ -141,6 +141,7 @@
 		      <div data-role="content">
 				<div class="ui-grid-solo errormessage"></div>
 				<div class="ui-grid-solo goodmessage"></div>
+				<a href="javascript:void();" onclick="Configs_Reset();" data-role="button">Reset Configs</a>
 				<label for="select-choice-0" class="select">Shipping method:</label>
 				<select name="select-choice-0" id="select-choice-0">
 				<option value="standard">Standard: 7 day</option>

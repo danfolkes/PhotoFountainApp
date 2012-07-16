@@ -54,20 +54,20 @@ function Page_Load() {
 }
 
 function Configs_Load() {
-	if (configs == undefined || configs.length == 0) {
+	if (configs["pf_imgid"] == undefined) {
 		//try and load from cookies
-		if (configs == undefined || configs.length == 0) {
+		configs = JSON.parse($.Storage.get("configs"));
+		if (configs["pf_imgid"] == undefined) {
 			//no, then get from db
-			alert ("get from db");
 
 			//LoadDBUp();
-			if (configs == undefined || configs.length == 0) {
+			if (configs["pf_imgid"] == undefined) {
 				//no, then load defaults:
 				alert ("loading defaults");
 				
 				var numRand = Math.random();
 				
-				configs =  {};
+				configs = {};
 				configs["key"]="value"; 
 				configs["pf_imgid"]=-1; 
 				configs["filterid_1"]=1; 
@@ -77,15 +77,21 @@ function Configs_Load() {
 				configs["img_Base64"]=null; 
 				configs["numRand"]=numRand;
 				configs["saved_img_paths"] = "";
-				
 			}
 		}
 	}
 }
 function Configs_Save() {
 	// save configs to db
-
+	
+	$.Storage.set("configs", JSON.stringify(configs));
+	
 	return true;
+}
+function Configs_Reset() {
+	// save configs to db
+	$.Storage.remove("configs");
+	Configs_Load();
 }
 
 function capturePhotoEdit() {
