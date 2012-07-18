@@ -19,27 +19,26 @@ $(function() {
 function Page_Load() {
 	Configs_Load();
 	
-	if (configs["pf_imgid"] <= 0) {
-		if (configs["img_src"] != null || configs["img_Base64"] != null ) {
-			//Load Image Source and Enable Links to Filters
-			$("#SelectedPhotoImg").attr("src","data:image/jpeg;base64," + configs["img_Base64"]);
-			// or $("#SelectedPhotoImg").attr("src",configs["img_src"]);
-			
-			$("#main_image_selected").show();
-			$("#main_image_not_selected").hide();
-		}
-		else {
-			// Defaut:
-			//Load Camera
-			$("#main_image_selected").hide();
-			$("#main_image_not_selected").show();
-			
-			capturePhotoEdit();
-		}
-	}
-	else if (configs["pf_imgid"] > 0) {
-		// Image Should Be Uploaded and we should have a imgid=? back from the server.
+	
+	if (configs["img_Base64"] != null) {
+		//Load Image Source and Enable Links to Filters
+		$("#SelectedPhotoImg").attr("src","data:image/jpeg;base64," + configs["img_Base64"]);
+		// or $("#SelectedPhotoImg").attr("src",configs["img_src"]);
 		
+		$("#main_image_selected").show();
+		$("#main_image_not_selected").hide();
+	}
+	
+	if ((configs["pf_imgid"] <= 0)&&(configs["img_Base64"] == null)) {
+		$("#main_image_selected").hide();
+		$("#main_image_not_selected").show();
+		capturePhotoEdit();
+	}
+	
+	if (configs["pf_imgid"] > 0) {
+		alert(configs["pf_imgid"]);
+		// Image Should Be Uploaded and we should have a imgid=? back from the server.
+		LoadFilterScreen();
 		//$(".modify_selector_imgs").append(previewImage1);
 		//$(".modify_selector_imgs").append(previewImage2);
 		//$(".modify_selector_imgs").append(previewImage3);
@@ -52,7 +51,21 @@ function Page_Load() {
 		//Allow "share".
 	}
 }
+function LoadFilterScreen() {
+	
+	//$('#message').append(configs["pf_imgid"]);
+	
+	$("#SaveAndShareSelector").html("<legend>Check Items to Save and Share:</legend>");
+	addToFilterSelector(configs["filterid_1"]);
+	addToFilterSelector(configs["filterid_2"]);
+	addToFilterSelector(configs["filterid_3"]);
+	$("#SaveAndShareSelector").page();
 
+	$("#upload a").hide();
+	Configs_Save();
+	$.mobile.changePage( "#filter", { reloadPage : true});
+	
+}
 function Configs_Load() {
 	if (configs["pf_imgid"] == undefined) {
 		//try and load from cookies
@@ -139,39 +152,35 @@ function getPhotoFromLIBRARY() {
   }
 
 function UploadImage() {
-	   
 		$.post( "http://danfolkes.com/etc/aaa/im/wsi/upload.php", { i: configs["img_Base64"], r: configs["numRand"] }, function( data) {
 			
 		}).complete(function() { 
 			
 			$.post( "http://danfolkes.com/etc/aaa/im/wsi/upload.php", { r: configs["numRand"] }, function( data ) {
-
+				
 				configs["pf_imgid"]=data.id; 
-				$("#upload .status").append(data.status);
+				Message(data.status);
 				$("#upload .progress").hide();
-				$('#message').append(configs["pf_imgid"]);
-				
-				$(".filter-selector").html("");
-				addToFilterSelector(configs["filterid_1"]);
-				addToFilterSelector(configs["filterid_2"]);
-				addToFilterSelector(configs["filterid_3"]);
-				
-				$("#upload a").hide();
-				$.mobile.changePage( "#filter");
-				
+				LoadFilterScreen();
 			}, "jsonp");
 		});
 		return false;
 }
 function addToFilterSelector(filterID) {
+	
 	if (( filterID > 0 )&&( configs["pf_imgid"] > 0 ))
 	{
 		var previewImage = "";
-		previewImage += "<label>";
-		previewImage += "	<input data-theme=\"a\" type=\"checkbox\" name=\"checkbox-" + filterID + "\" />";
-		previewImage += "	<img data-type=\"horizontal\" src=\"http://danfolkes.com/etc/aaa/im/wsi/getpic.php?id=" + configs["pf_imgid"] + "&width=300&filter=" + filterID + "\" />";
-		previewImage += "</label>";
-		$(".filter-selector").html($(".filter-selector").html() + previewImage);
+		//previewImage += "<label>";
+		//previewImage += "	<input type=\"checkbox\" name=\"checkbox-" + filterID + "\" />";
+		//previewImage += "	<img data-type=\"horizontal\" src=\"http://danfolkes.com/etc/aaa/im/wsi/getpic.php?id=" + configs["pf_imgid"] + "&width=300&filter=" + filterID + "\" />";
+		//previewImage += "</label>";
+		previewImage += "<input data-theme=\"a\" type=\"checkbox\" name=\"checkbox-" + filterID + "\" id=\"checkbox-2\" class=\"custom\" />";
+		previewImage += "<label for=\"checkbox-2\"><img data-type=\"horizontal\" src=\"http://danfolkes.com/etc/aaa/im/wsi/getpic.php?id=" + configs["pf_imgid"] + "&width=300&filter=" + filterID + "\" width=\"100%\" /></label>";
+		
+		
+		$("#SaveAndShareSelector").html($("#SaveAndShareSelector").html() + previewImage);
+		alert($("#SaveAndShareSelector").html());
 	}
 }
 
