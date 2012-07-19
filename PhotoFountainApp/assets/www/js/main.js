@@ -59,17 +59,17 @@ function LoadFilterScreen() {
 	addToFilterSelector(configs["filterid_1"]);
 	addToFilterSelector(configs["filterid_2"]);
 	addToFilterSelector(configs["filterid_3"]);
-	$("#SaveAndShareSelector").page();
 
 	$("#upload a").hide();
 	Configs_Save();
-	$.mobile.changePage( "#filter", { reloadPage : true});
+	$.mobile.changePage( "#filter");
 	
 }
 function Configs_Load() {
 	if (configs["pf_imgid"] == undefined) {
 		//try and load from cookies
 		configs = JSON.parse($.Storage.get("configs"));
+		if (configs == null) configs = {};
 		if (configs["pf_imgid"] == undefined) {
 			//no, then get from db
 
