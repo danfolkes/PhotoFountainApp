@@ -59,10 +59,10 @@ function LoadFilterScreen() {
 	addToFilterSelector(configs["filterid_1"]);
 	addToFilterSelector(configs["filterid_2"]);
 	addToFilterSelector(configs["filterid_3"]);
-
+	$.mobile.changePage( "#filter");
+	//$("#SaveAndShareSelector input[type='checkbox']").checkboxradio("refresh"); 
 	$("#upload a").hide();
 	Configs_Save();
-	$.mobile.changePage( "#filter");
 	
 }
 function Configs_Load() {
