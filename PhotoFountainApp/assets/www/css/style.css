@@ -26,6 +26,25 @@ html.ui-mobile body div.ui-page {
 	background-position: -18px -19px;
 }
 
+#SaveAndShareSelector div{
+	margin:10px 1px;
+	border: 1px dotted black;
+	background-color:inherit;
+}
+#SaveAndShareSelector div.selected{
+	margin:0px;
+	border-left-width:2px;
+	border-right-width:2px;
+	border-top-width:11px;
+	border-bottom-width:11px;
+	border-color:yellow;
+	background-color:yellow;
+	border-style:solid;
+}
+#SaveAndShareSelector div input{
+	display:none;
+}
+
 /*
 #topmenu {
 	width:100%;

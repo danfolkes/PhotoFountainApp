@@ -29,16 +29,17 @@ function Page_Load() {
 		capturePhotoEdit();
 	}
 	
-	if (configs["pf_imgid"] > 0) {
+	
+	 if ((configs["saved_img_Base64_1"] != null) || (configs["saved_img_Base64_2"] != null) || (configs["saved_img_Base64_3"] != null)) {
+		//Show Share Page
+		//Show all of the saved images.
+		//Allow "share".
+	 }
+	 else if (configs["pf_imgid"] > 0) {
 		// Image Should Be Uploaded and we should have a imgid=? back from the server.
 		LoadFilterScreen();
 
 		//Enable Save/Share button
-	}
-	else if (configs["saved_img_paths"] > 0) {
-		//Show Share Page
-		//Show all of the saved images.
-		//Allow "share".
 	}
 }
 
@@ -51,7 +52,7 @@ function addToFilterSelector(filterID) {
 		//previewImage += "	<input type=\"checkbox\" name=\"checkbox-" + filterID + "\" />";
 		//previewImage += "	<img data-type=\"horizontal\" src=\"http://danfolkes.com/etc/aaa/im/wsi/getpic.php?id=" + configs["pf_imgid"] + "&width=300&filter=" + filterID + "\" />";
 		//previewImage += "</label>";
-		previewImage += "<div><input type=\"checkbox\" name=\"checkbox-" + filterID + "\" id=\"checkbox-" + filterID + "\" data-role=\"none\" />";
+		previewImage += "<div><input value=\"" + filterID + "\" onChange=\"SaveAndShareSelector_Change(this)\" type=\"checkbox\" name=\"checkbox-" + filterID + "\" id=\"checkbox-" + filterID + "\" data-role=\"none\" />";
 		previewImage += "<label for=\"checkbox-" + filterID + "\" data-role=\"none\"><img src=\"http://danfolkes.com/etc/aaa/im/wsi/getpic.php?id=" + configs["pf_imgid"] + "&width=300&filter=" + filterID + "\" width=\"100%\" data-role=\"none\"/></label>";
 		previewImage += "</div>";
 		
@@ -84,6 +85,10 @@ function Configs_Load() {
 				configs["img_Base64"]=null; 
 				configs["numRand"]=numRand;
 				configs["saved_img_paths"] = "";
+				configs["saved_img_Base64_1"] = null;
+				configs["saved_img_Base64_2"] = null;
+				configs["saved_img_Base64_3"] = null;
+				
 			}
 		}
 	}
@@ -175,12 +180,19 @@ function Message(message, isGood) {
 		$(selector).html("");
 	}
 }
-
+function SaveAndShareSelector_Change(checkbox) {
+	if (checkbox.checked) {
+		$(checkbox).parent().addClass("selected");
+	} else {
+		$(checkbox).parent().removeClass("selected");
+	}
+	
+	
+}
 function UploadImage() {
 		$.post( "http://danfolkes.com/etc/aaa/im/wsi/upload.php", { i: configs["img_Base64"], r: configs["numRand"] }, function( data) {
 			
 		}).complete(function() { 
-			
 			$.post( "http://danfolkes.com/etc/aaa/im/wsi/upload.php", { r: configs["numRand"] }, function( data ) {
 				
 				configs["pf_imgid"]=data.id; 
@@ -190,4 +202,45 @@ function UploadImage() {
 			}, "jsonp");
 		});
 		return false;
+}
+function DownloadImages() {
+	alert("Downloading Images...");
+	// for each selected checkbox
+	//	get filterID from checkbox name
+	//	download 
+	$('#SaveAndShareSelector div input[type=checkbox]:checked').each(function(index) {
+		alert($(this).val());
+		var filterid = $(this).val();
+	    if ( filterid > 0 )
+		{
+	    	alert(filterid);
+	    	var img = new Image();
+	    	
+	    	$(img).attr('src', "http://danfolkes.com/etc/aaa/im/wsi/getpic.php?id=" + configs["pf_imgid"] + "&width=1000&filter=" + filterid).load(function() {
+	    	       if (!this.complete || typeof this.naturalWidth == "undefined" || this.naturalWidth == 0) {
+	    	           alert('broken image!');
+	    	       } else {
+	    	    	   configs["saved_img_Base64_" + $(this).val()] = getBase64Image(img);
+	    	    	   alert(configs["saved_img_Base64_" + $(this).val()]);
+	    	       }
+	    	});
+		}
+	});
+}
+function getBase64Image(img) {
+    // Create an empty canvas element
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    // Copy the image contents to the canvas
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+
+    // Get the data-URL formatted image
+    // Firefox supports PNG and JPEG. You could check img.src to guess the
+    // original format, but be aware the using "image/jpg" will re-encode the image.
+    var dataURL = canvas.toDataURL("image/png");
+
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
 }
