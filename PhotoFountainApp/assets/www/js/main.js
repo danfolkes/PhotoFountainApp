@@ -19,7 +19,6 @@ $(function() {
 function Page_Load() {
 	Configs_Load();
 	
-	
 	if (configs["img_Base64"] != null) {
 		//Load Image Source and Enable Links to Filters
 		$("#SelectedPhotoImg").attr("src","data:image/jpeg;base64," + configs["img_Base64"]);
@@ -50,10 +49,10 @@ function addToFilterSelector(filterID) {
 		var previewImage = "";
 		//previewImage += "<label>";
 		//previewImage += "	<input type=\"checkbox\" name=\"checkbox-" + filterID + "\" />";
-		//previewImage += "	<img data-type=\"horizontal\" src=\"http://danfolkes.com/etc/aaa/im/wsi/getpic.php?id=" + configs["pf_imgid"] + "&width=300&filter=" + filterID + "\" />";
+		//previewImage += "	<img data-type=\"horizontal\" src=\"http://danfolkes.com/photofountain/wsi/getpic.php?id=" + configs["pf_imgid"] + "&width=300&filter=" + filterID + "\" />";
 		//previewImage += "</label>";
 		previewImage += "<div><input value=\"" + filterID + "\" onChange=\"SaveAndShareSelector_Change(this)\" type=\"checkbox\" name=\"checkbox-" + filterID + "\" id=\"checkbox-" + filterID + "\" data-role=\"none\" />";
-		previewImage += "<label for=\"checkbox-" + filterID + "\" data-role=\"none\"><img src=\"http://danfolkes.com/etc/aaa/im/wsi/getpic.php?id=" + configs["pf_imgid"] + "&width=300&filter=" + filterID + "\" width=\"100%\" data-role=\"none\"/></label>";
+		previewImage += "<label for=\"checkbox-" + filterID + "\" data-role=\"none\"><img src=\"http://danfolkes.com/photofountain/wsi/getpic.php?id=" + configs["pf_imgid"] + "&width=300&filter=" + filterID + "\" width=\"100%\" data-role=\"none\"/></label>";
 		previewImage += "</div>";
 		
 		$("#SaveAndShareSelector").html($("#SaveAndShareSelector").html() + previewImage);
@@ -190,10 +189,10 @@ function SaveAndShareSelector_Change(checkbox) {
 	
 }
 function UploadImage() {
-		$.post( "http://danfolkes.com/etc/aaa/im/wsi/upload.php", { i: configs["img_Base64"], r: configs["numRand"] }, function( data) {
+		$.post( "http://danfolkes.com/photofountain/wsi/upload.php", { i: configs["img_Base64"], r: configs["numRand"] }, function( data) {
 			
 		}).complete(function() { 
-			$.post( "http://danfolkes.com/etc/aaa/im/wsi/upload.php", { r: configs["numRand"] }, function( data ) {
+			$.post( "http://danfolkes.com/photofountain/wsi/upload.php", { r: configs["numRand"] }, function( data ) {
 				
 				configs["pf_imgid"]=data.id; 
 				Message(data.status);
@@ -216,7 +215,7 @@ function DownloadImages() {
 	    	alert(filterid);
 	    	var img = new Image();
 	    	
-	    	$(img).attr('src', "http://danfolkes.com/etc/aaa/im/wsi/getpic.php?id=" + configs["pf_imgid"] + "&width=1000&filter=" + filterid).load(function() {
+	    	$(img).attr('src', "http://danfolkes.com/photofountain/wsi/getpic.php?id=" + configs["pf_imgid"] + "&width=1000&filter=" + filterid).load(function() {
 	    	       if (!this.complete || typeof this.naturalWidth == "undefined" || this.naturalWidth == 0) {
 	    	           alert('broken image!');
 	    	       } else {
