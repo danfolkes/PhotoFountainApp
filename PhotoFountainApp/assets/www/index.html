@@ -22,7 +22,7 @@
 		      		<div class="ui-grid-solo errormessage"></div>
 					<div class="ui-grid-solo goodmessage"></div>
 		           <fieldset class="ui-grid-a">
-						<div class="ui-block-b"><button type="submit" data-theme="b" data-icon="pf-camera">Camera</button></div>
+						<div class="ui-block-b"><button type="submit" data-theme="b" onclick="capturePhotoEdit();" data-icon="pf-camera">Camera</button></div>
 						<div class="ui-block-b"><button type="submit" data-theme="b" onclick="getPhotoFromLIBRARY();">Gallery</button></div>	   
 					</fieldset>
 					<div class="ui-grid-solo">
@@ -31,7 +31,7 @@
 								>> Select Photo >> 
 							</a>
 							<a href="#upload" data-role="button" data-theme="a" onclick="UploadImage();">
-								<img data-type="horizontal" src="" width="100%" id="SelectedPhotoImg" />
+								<img data-type="horizontal"  width="100%" id="SelectedPhotoImg" />
 							</a>
 						</div>
 						<div class="ui-block-a" id="main_image_not_selected">
