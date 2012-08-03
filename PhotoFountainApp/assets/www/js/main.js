@@ -114,11 +114,12 @@ function capturePhotoEdit() {
 		// Take picture using device camera, allow edit, and retrieve image as base64-encoded string  
 		navigator.camera.getPicture(function onPhotoDataSuccess(imageData) {
 			configs["img_src"]=imageData;
+			Message("<br/>capturePhotoEdit:" + configs["img_src"]);
 			$("#main_image_selected").show();
 			$("#main_image_not_selected").hide();
 			$("#SelectedPhotoImg").attr("src","" + imageData);
 	    }, function onFail(message) {
-	    	Message('Error message: '           + message             + '');
+	    	Message('Error message: ' + message + '');
 	    }, { quality: 10, allowEdit: true, destinationType: destinationType.FILE_URI });
 	}
 	catch (err) {
@@ -194,22 +195,28 @@ function SaveAndShareSelector_Change(checkbox) {
 function UploadImage() {
 	$("#upload .progress").show();
 	var imageURI = configs["img_src"];
+	Message(imageURI);
 	var options = new FileUploadOptions();
     options.fileKey="i";
     options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
     options.mimeType="image/png";
 
+    var numRand = Math.random();
+    if (configs["numRand"]==undefined)
+    	configs["numRand"]=numRand;
+	
     var params = new Object();
     params.value1 = "r";
     params.value2 = configs["numRand"];
 
     options.params = params;
-
+    Message("<br/>r = " + configs["numRand"]);
+    Message("<br/>ofn = " + options.fileName);
     var ft = new FileTransfer();
-    ft.upload(imageURI, "http://danfolkes.com/photofountain/wsi/upload.php", function() { 
-    	Message("Code = " + r.responseCode);
-    	Message("Response = " + r.response);
-    	Message("Sent = " + r.bytesSent);
+    ft.upload(imageURI, "http://danfolkes.com/photofountain/wsi/upload.php", function(response) { 
+    	Message("<br/>Code = " + response.responseCode);
+    	Message("<br/>Response = " + response.response);
+    	Message("<br/>Sent = " + response.bytesSent);
     	//Must do:
     	//http://www.webdeveloper.com/forum/showthread.php?p=544009
     	$.post( "http://danfolkes.com/photofountain/wsi/upload.php", { r: configs["numRand"] }, function( data ) {
@@ -257,7 +264,7 @@ function DownloadImages() {
 	    	       if (!this.complete || typeof this.naturalWidth == "undefined" || this.naturalWidth == 0) {
 	    	           alert('broken image!');
 	    	       } else {
-	    	    	   configs["saved_img_src_" + $(this).val()] = getBase64Image(img);
+	    	    	   configs["saved_img_src_" + $(this).val()] = img;
 	    	    	   alert(configs["saved_img_src_" + $(this).val()]);
 	    	       }
 	    	});
