@@ -64,10 +64,32 @@ function addToFilterSelector(filterID) {
 function Configs_Load() {
 	if (configs["pf_imgid"] == undefined) {
 		//try and load from cookies
-		configs = JSON.parse($.Storage.get("configs"));
+		try {configs = JSON.parse($.Storage.get("configs"));}
+		catch (Exception ex) {configs = null;}
+		
 		if (configs == null) configs = {};
 		if (configs["pf_imgid"] == undefined) {
 			//no, then get from db
+			
+			try {
+				var db = window.openDatabase("PhotoFountainDB", "1.0", "PhotoFountainDB", 200000);
+				db.transaction(function(tx) {
+				    tx.executeSql('SELECT * FROM DEMO', [], function(tx, results) {
+				    	console.log("Returned rows = " + results.rows.length);
+				    	for (var i=0; i<len; i++){
+				    		Message("<br />Row = " + i + " Data =  " + results.rows.item(i).data);
+				    		configs = JSON.parse(results.rows.item(i).data);
+				        }
+		    		}, function(err) {
+					    Message("<br />Error processing SQL: "+err.code);
+					});
+				}, function(err) {
+				    Message("<br />Error processing SQL: "+err.code);
+				});	
+			}
+			catch (ex) {
+				Message(ex);
+			}
 
 			//LoadDBUp();
 			if (configs["pf_imgid"] == undefined) {
@@ -103,6 +125,23 @@ function Configs_Save() {
 	// save configs to db
 	
 	$.Storage.set("configs", JSON.stringify(configs));
+	try {
+		var db = window.openDatabase("PhotoFountainDB", "1.0", "PhotoFountainDB", 200000);
+		db.transaction(function(tx) {
+		     tx.executeSql('CREATE TABLE IF NOT EXISTS PhotoFountainTable (data)');
+		     //if rows = 0;
+		     tx.executeSql('TRUNCATE PhotoFountainTable');
+		     tx.executeSql('INSERT INTO PhotoFountainTable (data) VALUES ("' + JSON.stringify(configs) + '")');
+		}, function(err) {
+		    Message("Error processing SQL: "+err.code);
+		}, function() {
+		    //alert("success!");
+			Message("DB Configs_Save");
+		});
+	}
+	catch (ex) {
+		Message(ex);
+	}
 	
 	return true;
 }
@@ -198,8 +237,9 @@ function UploadImage() {
 	Message(imageURI);
 	var options = new FileUploadOptions();
     options.fileKey="i";
-    options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
-    options.mimeType="image/png";
+    options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1)+".jpg"; 
+    //options.fileName = configs["img_src"];
+    options.mimeType="image/jpg";
 
     var numRand = Math.random();
     if (configs["numRand"]==undefined)
@@ -211,7 +251,7 @@ function UploadImage() {
 
     options.params = params;
     Message("<br/>r = " + configs["numRand"]);
-    Message("<br/>ofn = " + options.fileName);
+    Message("<br/>options.fileName = " + options.fileName);
     var ft = new FileTransfer();
     ft.upload(imageURI, "http://danfolkes.com/photofountain/wsi/upload.php", function(response) { 
     	Message("<br/>Code = " + response.responseCode);
