@@ -64,8 +64,12 @@ function addToFilterSelector(filterID) {
 function Configs_Load() {
 	if (configs["pf_imgid"] == undefined) {
 		//try and load from cookies
-		try {configs = JSON.parse($.Storage.get("configs"));}
-		catch (Exception ex) {configs = null;}
+		try {
+			configs = JSON.parse($.Storage.get("configs"));
+		}
+		catch (ex) {
+			configs = {};
+		}
 		
 		if (configs == null) configs = {};
 		if (configs["pf_imgid"] == undefined) {
@@ -237,7 +241,7 @@ function UploadImage() {
 	Message(imageURI);
 	var options = new FileUploadOptions();
     options.fileKey="i";
-    options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1)+".jpg"; 
+    options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1)+""; 
     //options.fileName = configs["img_src"];
     options.mimeType="image/jpg";
 
@@ -267,7 +271,9 @@ function UploadImage() {
 			LoadFilterScreen();
     	}, "jsonp");
 	}, function fail(error) {
-        Message("An error has occurred: Code = " = error.code);
+        Message("An error has occurred: Code = " + error.code);
+        Message(" | download error target " + error.target);
+        Message(" | upload error source" + error.source);
     }, options);
     
 	
