@@ -39,7 +39,6 @@ function Page_Load() {
 	 else if (configs["pf_imgid"] > 0) {
 		// Image Should Be Uploaded and we should have a imgid=? back from the server.
 		LoadFilterScreen();
-
 		//Enable Save/Share button
 	}
 }
@@ -78,7 +77,7 @@ function Configs_Load() {
 			try {
 				var db = window.openDatabase("PhotoFountainDB", "1.0", "PhotoFountainDB", 200000);
 				db.transaction(function(tx) {
-				    tx.executeSql('SELECT * FROM DEMO', [], function(tx, results) {
+				    tx.executeSql('SELECT * FROM PhotoFountainTable', [], function(tx, results) {
 				    	console.log("Returned rows = " + results.rows.length);
 				    	for (var i=0; i<len; i++){
 				    		Message("<br />Row = " + i + " Data =  " + results.rows.item(i).data);
@@ -127,14 +126,18 @@ function Configs_Reset() {
 
 function Configs_Save() {
 	// save configs to db
-	
-	$.Storage.set("configs", JSON.stringify(configs));
+	try {
+		$.Storage.set("configs", JSON.stringify(configs));
+	}
+	catch (ex) {
+		Message("Storage Fail:" + ex);
+	}
 	try {
 		var db = window.openDatabase("PhotoFountainDB", "1.0", "PhotoFountainDB", 200000);
 		db.transaction(function(tx) {
+			 tx.executeSql('DROP TABLE IF EXISTS PhotoFountainTable ');
 		     tx.executeSql('CREATE TABLE IF NOT EXISTS PhotoFountainTable (data)');
 		     //if rows = 0;
-		     tx.executeSql('TRUNCATE PhotoFountainTable');
 		     tx.executeSql('INSERT INTO PhotoFountainTable (data) VALUES ("' + JSON.stringify(configs) + '")');
 		}, function(err) {
 		    Message("Error processing SQL: "+err.code);
@@ -144,7 +147,7 @@ function Configs_Save() {
 		});
 	}
 	catch (ex) {
-		Message(ex);
+		Message("DB Fail:" + ex);
 	}
 	
 	return true;
@@ -195,10 +198,11 @@ function getPhotoFromLIBRARY() {
 	}
   }
 function LoadFilterScreen() {
-	
+	alert("LoadFilterScreen...");
 	//$('#message').append(configs["pf_imgid"]);
 	
 	$("#SaveAndShareSelector").html("<legend>Check Items to Save and Share:</legend>");
+	alert("configs[filterid_1]:" + configs["filterid_1"]);
 	addToFilterSelector(configs["filterid_1"]);
 	addToFilterSelector(configs["filterid_2"]);
 	addToFilterSelector(configs["filterid_3"]);
@@ -208,9 +212,7 @@ function LoadFilterScreen() {
 	Configs_Save();
 	
 }
-function Message(message) {
-	Message(message,false);
-}
+
 function Message(message, isGood) {
 	var selector = "div.errormessage";
 	if (isGood == true) {
@@ -225,6 +227,7 @@ function Message(message, isGood) {
 	else {
 		$(selector).html("");
 	}
+	console.log(message);
 }
 function SaveAndShareSelector_Change(checkbox) {
 	if (checkbox.checked) {
@@ -236,62 +239,56 @@ function SaveAndShareSelector_Change(checkbox) {
 	
 }
 function UploadImage() {
-	$("#upload .progress").show();
-	var imageURI = configs["img_src"];
-	Message(imageURI);
-	var options = new FileUploadOptions();
-    options.fileKey="i";
-    options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1)+""; 
-    //options.fileName = configs["img_src"];
-    options.mimeType="image/jpg";
-
-    var numRand = Math.random();
-    if (configs["numRand"]==undefined)
-    	configs["numRand"]=numRand;
+	try {
+		$("#upload .progress").show();
+		var imageURI = configs["img_src"];
+		Message(imageURI);
+		var options = new FileUploadOptions();
+	    options.fileKey="i";
+	    options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1)+""; 
+	    //options.fileName = configs["img_src"];
+	    options.mimeType="image/jpg";
 	
-    var params = new Object();
-    params.value1 = "r";
-    params.value2 = configs["numRand"];
-
-    options.params = params;
-    Message("<br/>r = " + configs["numRand"]);
-    Message("<br/>options.fileName = " + options.fileName);
-    var ft = new FileTransfer();
-    ft.upload(imageURI, "http://danfolkes.com/photofountain/wsi/upload.php", function(response) { 
-    	Message("<br/>Code = " + response.responseCode);
-    	Message("<br/>Response = " + response.response);
-    	Message("<br/>Sent = " + response.bytesSent);
-    	//Must do:
-    	//http://www.webdeveloper.com/forum/showthread.php?p=544009
-    	$.post( "http://danfolkes.com/photofountain/wsi/upload.php", { r: configs["numRand"] }, function( data ) {
-    		
-			configs["pf_imgid"]=data.id; 
-			Message(data.status);
-			$("#upload .progress").hide();
-			LoadFilterScreen();
-    	}, "jsonp");
-	}, function fail(error) {
-        Message("An error has occurred: Code = " + error.code);
-        Message(" | download error target " + error.target);
-        Message(" | upload error source" + error.source);
-    }, options);
-    
-	
-	
-	
-	
-		/*$.post( "http://danfolkes.com/photofountain/wsi/upload.php", { i: configs["img_src"], r: configs["numRand"] }, function( data) {
-			
-		}).complete(function() { 
-			$.post( "http://danfolkes.com/photofountain/wsi/upload.php", { r: configs["numRand"] }, function( data ) {
+	    var numRand = Math.random();
+	    if (configs["numRand"]==undefined)
+	    	configs["numRand"]=numRand;
+		
+	    var params = new Object();
+	    params.r = configs["numRand"];
+	    options.params = params;
+	    
+	    Message("<br/>r = " + configs["numRand"]);
+	    Message("<br/>options.fileName = " + options.fileName);
+	    var ft = new FileTransfer();
+	    ft.upload(imageURI, encodeURI("http://danfolkes.com/photofountain/wsi/upload.php"), function(response) { 
+	    	Message("<br/>Code = " + response.responseCode);
+	    	Message("<br/>Response = " + response.response);
+	    	Message("<br/>Sent = " + response.bytesSent);
+	    	alert("POSTING...");
+	    	//Must do:
+	    	$.post( encodeURI("http://danfolkes.com/photofountain/wsi/upload.php"), { r: configs["numRand"] }, function( data ) {
 				
-				configs["pf_imgid"]=data.id; 
-				Message(data.status);
-				$("#upload .progress").hide();
-				LoadFilterScreen();
-			}, "jsonp");
-		});*/
-		return false;
+				if (data.id > 0) {
+		    		configs["pf_imgid"]=data.id; 
+		    		alert("POSTED");
+		    		$("#upload .progress").hide();
+					LoadFilterScreen();
+				}
+				else {
+					Message("FAILED: " + data.status);
+					alert("FAILED: " + data.status);
+				}
+	    	}, "jsonp");
+		}, function (error) {
+	        Message("An error has occurred: Code = " + error.code);
+	        Message(" | download error target " + error.target);
+	        Message(" | upload error source" + error.source);
+	    }, options);
+	}
+	catch (ex) {
+		Message("<br/>Error on UploadImage: " + ex);
+	}
+	return false;
 }
 function DownloadImages() {
 	alert("Downloading Images...");
