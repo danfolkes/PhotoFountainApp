@@ -12,9 +12,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
+import android.net.Uri;
 
 import org.apache.cordova.api.Plugin;
 import org.apache.cordova.api.PluginResult;
+
+import dfolkes.PhotoFountainApp.R;
 
 public class Share extends Plugin {
 
@@ -30,10 +33,13 @@ public class Share extends Plugin {
 	}
 	
 	private void doSendIntent(String subject, String text) {
-		Intent sendIntent = new Intent(android.content.Intent.ACTION_SEND);
+		Intent sendIntent = new Intent(android.content.Intent.ACTION_PICK);
+		
 		sendIntent.setType("text/plain");
-		sendIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
-		sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, text);
+		/*sendIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
+		sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, text);*/
+		
+		sendIntent.setData(Uri.parse("android.resource://dfolkes.PhotoFountainApp/" + R.drawable.ic_launcher));
 		this.cordova.startActivityForResult(this, sendIntent, 0);
 	}
 

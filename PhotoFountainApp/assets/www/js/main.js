@@ -9,7 +9,13 @@ document.addEventListener("deviceready",onDeviceReady,false);
 document.addEventListener("load",onDeviceReady,false);
 
 function onDeviceReady() {
-	Share();
+	var share = new Share();
+	share.show({
+	    subject: 'I like turtles',
+	    text: 'http://www.mndaily.com'},
+	    function(yay) {alert('Share Success' + yay)}, // Success function
+	    function(err) {alert('Share failed' + err)} // Failure function
+	);
 	Page_Load();
 }
 $(function() {
@@ -337,14 +343,7 @@ function DownloadImages() {
 		}
 	});
 }
-function Share() {
-	window.plugins.share.show({
-	    subject: 'I like turtles',
-	    text: '/mnt/sdcard/id117filter1.jpg'},
-	    function() {alert('Share Success')}, // Success function
-	    function() {alert('Share failed')} // Failure function
-	);
-}
+
 function getBase64Image(img) {
     // Create an empty canvas element
     var canvas = document.createElement("canvas");
