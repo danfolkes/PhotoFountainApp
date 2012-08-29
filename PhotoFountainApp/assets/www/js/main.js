@@ -9,6 +9,7 @@ document.addEventListener("deviceready",onDeviceReady,false);
 document.addEventListener("load",onDeviceReady,false);
 
 function onDeviceReady() {
+	Share();
 	Page_Load();
 }
 $(function() {
@@ -113,6 +114,7 @@ function Configs_Load() {
 				configs["saved_img_src_1"] = null;
 				configs["saved_img_src_2"] = null;
 				configs["saved_img_src_3"] = null;
+				configs["saved_img_src"] = [];
 				
 			}
 		}
@@ -296,23 +298,52 @@ function DownloadImages() {
 	//	get filterID from checkbox name
 	//	download 
 	$('#SaveAndShareSelector div input[type=checkbox]:checked').each(function(index) {
-		alert($(this).val());
 		var filterid = $(this).val();
 	    if ( filterid > 0 )
 		{
-	    	alert(filterid);
-	    	var img = new Image();
+	    	//alert(filterid);
 	    	
-	    	$(img).attr('src', "http://danfolkes.com/photofountain/wsi/getpic.php?id=" + configs["pf_imgid"] + "&width=1000&filter=" + filterid).load(function() {
-	    	       if (!this.complete || typeof this.naturalWidth == "undefined" || this.naturalWidth == 0) {
-	    	           alert('broken image!');
-	    	       } else {
-	    	    	   configs["saved_img_src_" + $(this).val()] = img;
-	    	    	   alert(configs["saved_img_src_" + $(this).val()]);
-	    	       }
-	    	});
+	    	var fileTransfer = new FileTransfer();
+	    	var uri = encodeURI("http://danfolkes.com/photofountain/wsi/getpic.php?id=" + configs["pf_imgid"] + "&width=1000&filter=" + filterid);
+	    	var localFileName = "id"+configs["pf_imgid"]+"filter"+filterid+".jpg";
+	    	
+	    	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+	    		fileSystem.root.getFile(localFileName, {create: true, exclusive: false}, function(fileEntry) {
+	    			var localPath = fileEntry.fullPath;
+	    			if (device.platform === "Android" && localPath.indexOf("file://") === 0) {
+	                    localPath = localPath.substring(7);
+	                }
+	    			
+	    			fileTransfer.download(uri,localPath,
+	    		    	    function(entry) {
+	    		    	        console.log("download complete: " + entry.fullPath);
+	    		    	        //var img = new Image();
+	    		    	        var img = document.createElement('img');
+	    		    	        img.src = entry.fullPath;
+	    		    	        img.width = "50%";
+	    		    	        //$(img).attr('src', entry.fullPath);
+	    		    	        $(".imagestoshare").append(img);
+	    		    	        
+	    		    	        
+	    		    	    },
+	    		    	    function(error) {
+	    		    	        console.log("download error source " + error.source);
+	    		    	        console.log("download error target " + error.target);
+	    		    	        console.log("upload error code" + error.code);
+	    		    	    }
+	    		    	);
+	    		}, Message);
+	    	}, Message);
 		}
 	});
+}
+function Share() {
+	window.plugins.share.show({
+	    subject: 'I like turtles',
+	    text: '/mnt/sdcard/id117filter1.jpg'},
+	    function() {alert('Share Success')}, // Success function
+	    function() {alert('Share failed')} // Failure function
+	);
 }
 function getBase64Image(img) {
     // Create an empty canvas element
